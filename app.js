@@ -48,6 +48,7 @@ function refreshArray() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     mainList = getRandomArray(ARRAY_SIZE)
     iterator = algo(mainList)
+    iterations = 0
     init()
 }
 
