@@ -8,7 +8,7 @@ var temp
 var ctx = canvas.getContext('2d')
 var rectColor
 var minIndex
-var iterations = 0
+var iterations
 var stepSpeed = 1
 
 // Constants
@@ -32,6 +32,8 @@ let iterator = algo(mainList)
 
 function init() {
 ctx.clearRect(0, 0, canvas.width, canvas.height)
+iterations = 0
+document.getElementById('iteration-indicator').innerHTML = iterations
   let dropdownContent = ''
   Object.keys(sortingAlgos).forEach((algo) => {
     dropdownContent += `<option value='${algo}'>${toTitleCase(algo.split('_').join(' '))}</option>`
@@ -46,9 +48,9 @@ ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 function refreshArray() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    iterations = 0
     mainList = getRandomArray(ARRAY_SIZE)
     iterator = algo(mainList)
-    iterations = 0
     init()
 }
 
