@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aladin&display=swap');
 
 /* Reset browser styles */
 
@@ -15,6 +16,7 @@ html {
 
 /* Actual styling */
 .sv-body {
+    position: relative;
     background: #dadad9;
     width: 100%;
     height: 100%;
@@ -53,6 +55,15 @@ html {
     padding: 10px;
 } */
 
+.name {
+        font-family: 'Aladin', cursive;
+        background: linear-gradient(92.05deg, #BCA1F7 12.09%, #E577B4 42.58%, #FF7170 84.96%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+}
+
 .iteration {
     min-width: 150px;
 }
@@ -79,4 +90,16 @@ html {
     /* background-color: #291720; */
     width: 100%;
     height: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fixed-footer {
+    position: fixed; 
+    bottom: 0;
+    background-color: #171717;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    color: white;
 }
