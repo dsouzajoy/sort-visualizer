@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Visualizer</title>
+</head>
+
+<body class='sv-body'>
+    <link rel="stylesheet" href="./style.css">
+    <div class='nav-container'>
+        <div class='nav-left'>
+            <p class='iteration'>Iterations: <span id='iteration-indicator'>0</span></p>
+    <button class='btn btn-start' onclick="startProcess()">Start </button>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <select id='sorting-dropdown' onchange="handleAlgorithmSelection()">
+                    </select>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src='./audio.js'></script>
+    <script src='./helpers.js'></script>
+    <script src='./app.js'></script>
+</body>
+
+</html>
