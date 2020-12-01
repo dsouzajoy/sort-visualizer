@@ -31,6 +31,7 @@ let mainList = getRandomArray(ARRAY_SIZE)
 let iterator = algo(mainList)
 
 function init() {
+ctx.clearRect(0, 0, canvas.width, canvas.height)
   let dropdownContent = ''
   Object.keys(sortingAlgos).forEach((algo) => {
     dropdownContent += `<option value='${algo}'>${toTitleCase(algo.split('_').join(' '))}</option>`
@@ -41,6 +42,13 @@ function init() {
     drawRect(rectOffset, 5, RECT_WIDTH, rectHeight)
     rectOffset = rectOffset + RECT_WIDTH + SPACE_BETWEEN_RECTS
   })
+}
+
+function refreshArray() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    mainList = getRandomArray(ARRAY_SIZE)
+    iterator = algo(mainList)
+    init()
 }
 
 function startProcess() {

@@ -25,6 +25,7 @@ html {
     background-color: #171717;
     color: #F06449;
     font-family: 'Poppins', sans-serif;
+    padding-top: 20px;
 }
 
 .nav-container {
@@ -48,9 +49,9 @@ html {
     padding: 0;
 }
 
-.nav-container nav ul li {
+/* .nav-container nav ul li {
     padding: 10px;
-}
+} */
 
 .iteration {
     min-width: 150px;
