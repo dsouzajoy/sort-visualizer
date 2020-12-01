@@ -57,7 +57,12 @@ html {
 
 .name {
         font-family: 'Aladin', cursive;
-        background: linear-gradient(92.05deg, #BCA1F7 12.09%, #E577B4 42.58%, #FF7170 84.96%);
+
+        background: #c21500;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #ffc500, #c21500);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #ffc500, #c21500); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -102,4 +107,10 @@ html {
     padding: 10px;
     text-align: center;
     color: white;
+    font-size: 1.1rem;
+}
+
+.fixed-footer a{
+    text-decoration: none;
+    all: unset;
 }
