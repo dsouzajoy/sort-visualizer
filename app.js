@@ -10,35 +10,41 @@ var rectColor
 var minIndex
 var iterations
 var stepSpeed = 1
+var isComplete = false
+var states = []
 
 // Constants
-const SPACE_BETWEEN_RECTS = 3
+const SPACE_BETWEEN_RECTS = 1
 const CANVAS_PADDING = 10
-const RECT_WIDTH = canvas.width > 1100 ? 5 : 3
-const ARRAY_SIZE = Math.floor(canvas.width / (RECT_WIDTH + SPACE_BETWEEN_RECTS)) - 3 // minus 3 to get a little padding on the right
+let RECT_WIDTH = canvas.width > 1100 ? 7 : 3
+let ARRAY_SIZE = Math.floor(canvas.width / (RECT_WIDTH + SPACE_BETWEEN_RECTS)) - 6 // minus 3 to get a little padding on the right
 // const ARRAY_SIZE = 20
 const BUBBLE_SORT = 'BUBBLE_SORT'
 const SELECTION_SORT = 'SELECTION_SORT'
+const QUICK_SORT = 'QUICK_SORT'
 
 const sortingAlgos = {
   BUBBLE_SORT: bubbleSort,
   SELECTION_SORT: selectionSort,
+  QUICK_SORT: quickSort,
 }
 
 let chosenAlgo = document.getElementById('sorting-dropdown').value || 'BUBBLE_SORT'
 let algo = sortingAlgos[chosenAlgo]
-let mainList = getRandomArray(ARRAY_SIZE)
-let iterator = algo(mainList)
+let mainList
+// let iterator = algo(mainList, 0, mainList.length - 1)
 
 function init() {
-ctx.clearRect(0, 0, canvas.width, canvas.height)
-iterations = 0
-document.getElementById('iteration-indicator').innerHTML = iterations
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  mainList = getRandomArray(ARRAY_SIZE)
+  iterations = 0
+  document.getElementById('iteration-indicator').innerHTML = iterations
   let dropdownContent = ''
   Object.keys(sortingAlgos).forEach((algo) => {
     dropdownContent += `<option value='${algo}'>${toTitleCase(algo.split('_').join(' '))}</option>`
   })
   document.getElementById('sorting-dropdown').innerHTML = dropdownContent
+  document.getElementById('sorting-dropdown').value = chosenAlgo
   let rectOffset = CANVAS_PADDING
   mainList.forEach((rectHeight) => {
     drawRect(rectOffset, 5, RECT_WIDTH, rectHeight)
@@ -47,36 +53,44 @@ document.getElementById('iteration-indicator').innerHTML = iterations
 }
 
 function refreshArray() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    iterations = 0
-    mainList = getRandomArray(ARRAY_SIZE)
-    iterator = algo(mainList)
-    init()
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  iterations = 0
+  mainList = getRandomArray(ARRAY_SIZE)
+  init()
 }
 
 function startProcess() {
+  iterations = 0
+  document.getElementById('iteration-indicator').innerHTML = iterations
   audioContext.resume()
-  runAnimation()
+  if(!isSorted(mainList)){
+    algo(mainList, 0, mainList.length - 1)
+    runAnimation()
+  } else {
+    let choice = confirm('List is already sorted. Would you like to continue by refreshing?')
+    if(choice) {
+      refreshArray()
+      startProcess()
+    }
+  }
 }
 
 function runAnimation() {
+  console.log('-')
   document.getElementById('iteration-indicator').innerHTML = iterations
   let rectOffset = CANVAS_PADDING
-  let rectangles
-  for (let step = 0; step < stepSpeed; step++) {
-    rectangles = iterator.next().value
-  }
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  mainList.forEach((rectHeight, index) => {
+    drawRect(rectOffset, 5, RECT_WIDTH, rectHeight, getColor(index))
+    rectOffset = rectOffset + RECT_WIDTH + SPACE_BETWEEN_RECTS
+  })
 
-  if (rectangles) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    rectangles.forEach((rectHeight, index) => {
-      rectColor = getColor(index)
-      drawRect(rectOffset, 5, RECT_WIDTH, rectHeight, rectColor)
-      rectOffset = rectOffset + RECT_WIDTH + SPACE_BETWEEN_RECTS
-    })
+  if (!isSorted(mainList)) {
     requestAnimationFrame(runAnimation)
   } else {
-    console.log('Done')
+    console.log('done')
+    rectOffset = CANVAS_PADDING
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     mainList.forEach((rectHeight) => {
       drawRect(rectOffset, 5, RECT_WIDTH, rectHeight)
       rectOffset = rectOffset + RECT_WIDTH + SPACE_BETWEEN_RECTS
@@ -96,6 +110,10 @@ function getColor(index) {
       return index === minIndex || index === j ? '#F06449' : '#5BC3EB'
     }
 
+    case QUICK_SORT: {
+      return states[index] === 0 ? '#F06449' : states[index] === 1 ? '#39FF14' : '#5BC3EB'
+    }
+
     default: {
       return '#5BC3EB'
     }
@@ -107,5 +125,4 @@ function handleAlgorithmSelection() {
   console.log('$')
   chosenAlgo = document.getElementById('sorting-dropdown').value || 'BUBBLE_SORT'
   algo = sortingAlgos[chosenAlgo]
-  iterator = algo(mainList)
 }
