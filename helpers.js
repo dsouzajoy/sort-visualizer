@@ -30,7 +30,7 @@ async function bubbleSort(arr) {
         swap(arr, j, j + 1)
         isSwapped = true
       }
-      if (j % 2 === 0) {
+      if (j % 3 === 0) {
         playTone(arr[j] / 2)
       }
       iterations += 1
@@ -51,7 +51,7 @@ async function selectionSort(arr) {
       if (arr[j] < arr[minIndex]) {
         minIndex = j
       }
-      if (j % 2 === 0) {
+      if (j % 3 === 0) {
         playTone(arr[j] / 2)
       }
       iterations += 1
