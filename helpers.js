@@ -30,7 +30,9 @@ async function bubbleSort(arr) {
         swap(arr, j, j + 1)
         isSwapped = true
       }
-      playTone(arr[j] / 2)
+      if (j % 2 === 0) {
+        playTone(arr[j] / 2)
+      }
       iterations += 1
     }
     if (!isSwapped) {
@@ -49,7 +51,9 @@ async function selectionSort(arr) {
       if (arr[j] < arr[minIndex]) {
         minIndex = j
       }
-      playTone(arr[j] / 2)
+      if (j % 2 === 0) {
+        playTone(arr[j] / 2)
+      }
       iterations += 1
     }
     if (minIndex != i) {
@@ -60,28 +64,28 @@ async function selectionSort(arr) {
 }
 
 async function partition(arr, start, end) {
-  for (let a = start; a <= end; a++) {
+  for(let a = start; a <= end; a++ ){
     states[a] = 1
   }
-  let pivotValue = arr[end]
-  let pivotIndex = start
-  states[pivotIndex] = 0
+  let pivotValue = arr[end];
+  let pivotIndex = start;
+  states[pivotIndex] = 0;
   for (let i = start; i < end; i++) {
     if (arr[i] < pivotValue) {
       playTone(arr[i] / 3)
       await sleep(45)
-      swap(arr, i, pivotIndex)
-      states[pivotIndex] = -1
-      pivotIndex++
-      states[pivotIndex] = 0
+      swap(arr, i, pivotIndex);
+      states[pivotIndex] = -1;
+      pivotIndex++;
+      states[pivotIndex] = 0;
     }
   }
-  swap(arr, pivotIndex, end)
-  for (let a = start; a <= end; a++) {
+  swap(arr, pivotIndex, end);
+  for(let a = start; a <= end; a++ ){
     states[a] = -1
   }
 
-  return pivotIndex
+  return pivotIndex;
 }
 
 async function quickSort(arr, start, end) {
@@ -110,7 +114,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-function swap(arr, a, b) {
+ function swap(arr, a, b) {
   let temp = arr[a]
   arr[a] = arr[b]
   arr[b] = temp
