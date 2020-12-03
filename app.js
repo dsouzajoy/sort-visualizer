@@ -22,11 +22,13 @@ let ARRAY_SIZE = Math.floor(canvas.width / (RECT_WIDTH + SPACE_BETWEEN_RECTS)) -
 const BUBBLE_SORT = 'BUBBLE_SORT'
 const SELECTION_SORT = 'SELECTION_SORT'
 const QUICK_SORT = 'QUICK_SORT'
+const MERGE_SORT = 'MERGE_SORT'
 
 const sortingAlgos = {
   BUBBLE_SORT: bubbleSort,
   SELECTION_SORT: selectionSort,
   QUICK_SORT: quickSort,
+  MERGE_SORT: mergeSortVisual,
 }
 
 let chosenAlgo = document.getElementById('sorting-dropdown').value || 'BUBBLE_SORT'
@@ -107,7 +109,7 @@ function getColor(index) {
     }
 
     case SELECTION_SORT: {
-      return index === minIndex || index === j ? '#F06449' : '#5BC3EB'
+      return index === j ? '#F06449' : index === minIndex ? '#39FF14' : '#5BC3EB'
     }
 
     case QUICK_SORT: {

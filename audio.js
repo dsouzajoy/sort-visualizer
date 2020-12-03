@@ -11,5 +11,5 @@ function playTone(freq) {
   osc.start()
   setTimeout(() => {
     osc.stop()
-  }, 50)
+  }, 100)
 }
