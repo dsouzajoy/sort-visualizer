@@ -28,7 +28,7 @@ const sortingAlgos = {
   BUBBLE_SORT: bubbleSort,
   SELECTION_SORT: selectionSort,
   QUICK_SORT: quickSort,
-  MERGE_SORT: mergeSortVisual,
+  // MERGE_SORT: mergeSort,
 }
 
 let chosenAlgo = document.getElementById('sorting-dropdown').value || 'BUBBLE_SORT'

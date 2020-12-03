@@ -6,19 +6,6 @@ function drawRect(x, y, width, height, color) {
   ctx.fillRect(x, y, width, height)
 }
 
-function drawText(text, fontSize = 12, x = 0, y = 0) {
-  let c = document.getElementById('canvas')
-  let ctx = c.getContext('2d')
-  ctx.lineWidth = 8
-  ctx.font = '${fontSize}rem Arial'
-  ctx.strokeStyle = '#2D1E2F'
-  // ctx.fillStyle = '#EDE6E3';
-  ctx.textAlign = 'center'
-  ctx.miterLimit = 500
-  // ctx.strokeText(text, x, y);
-  ctx.fillText(text, x, y)
-}
-
 //Sorting Functions
 async function bubbleSort(arr) {
   let isSwapped
@@ -100,36 +87,39 @@ async function quickSort(arr, start, end) {
   quickSort(arr, index + 1, end)
   iterations += 1
 }
+  
+function mergeSort(arr) {
+  var sorted = arr.slice(),
+      n = sorted.length,
+      buffer = new Array(n);
 
- function merge(left, right) {
-  let resultArr = [],
-    leftIndex = 0,
-    rightIndex = 0
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
-      resultArr.push(left[leftIndex])
-      leftIndex++
-    } else {
-      resultArr.push(right[rightIndex])
-      rightIndex++
+  for (var size = 1; size < n; size *= 2) {
+    for (var leftStart = 0; leftStart < n; leftStart += 2*size) {
+      var left = leftStart,
+          right = Math.min(left + size, n),
+          leftLimit = right,
+          rightLimit = Math.min(right + size, n),
+          i = left;
+      while (left < leftLimit && right < rightLimit) {
+        if (sorted[left] <= sorted[right]) {
+          buffer[i++] = sorted[left++];
+        } else {
+          buffer[i++] = sorted[right++];
+        }
+      }
+      while (left < leftLimit) {
+        buffer[i++] = sorted[left++];
+      }
+      while (right < rightLimit) {
+        buffer[i++] = sorted[right++];
+      }
     }
+    var temp = sorted,
+        sorted = buffer,
+        buffer = temp;
   }
-  return resultArr.concat(left.slice(leftIndex)).concat(right.slice(rightIndex))
-}
 
- function mergeSort(arr) {
-  if (arr.length <= 1) {
-    return arr
-  }
-  const half = Math.floor(arr.length / 2)
-  const left = arr.slice(0, half)
-  const right = arr.slice(half)
-
-  return merge(mergeSort(left), mergeSort(right))
-}
-
-function mergeSortVisual(arr) {
-  mainList = mergeSort(arr)
+  return sorted;
 }
 
 // Other Functions
@@ -180,6 +170,9 @@ function sleep(ms) {
 
 // I know we need some better logic..but this works for now
 function isSorted(arr) {
+  if(arr.length !== ARRAY_SIZE){
+    return false
+  }
   for (let idx = 0; idx < arr.length - 1; idx++) {
     if (arr[idx] > arr[idx + 1]) {
       return false
