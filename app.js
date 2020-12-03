@@ -55,22 +55,24 @@ function init() {
 }
 
 function refreshArray() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  iterations = 0
-  mainList = getRandomArray(ARRAY_SIZE)
-  init()
+  if (isSorted(mainList)) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    iterations = 0
+    mainList = getRandomArray(ARRAY_SIZE)
+    init()
+  }
 }
 
 function startProcess() {
   iterations = 0
   document.getElementById('iteration-indicator').innerHTML = iterations
   audioContext.resume()
-  if(!isSorted(mainList)){
+  if (!isSorted(mainList)) {
     algo(mainList, 0, mainList.length - 1)
     runAnimation()
   } else {
     let choice = confirm('List is already sorted. Would you like to continue by refreshing?')
-    if(choice) {
+    if (choice) {
       refreshArray()
       startProcess()
     }
