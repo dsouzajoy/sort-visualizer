@@ -88,38 +88,84 @@ async function quickSort(arr, start, end) {
   iterations += 1
 }
   
-function mergeSort(arr) {
-  var sorted = arr.slice(),
-      n = sorted.length,
-      buffer = new Array(n);
 
-  for (var size = 1; size < n; size *= 2) {
-    for (var leftStart = 0; leftStart < n; leftStart += 2*size) {
-      var left = leftStart,
-          right = Math.min(left + size, n),
-          leftLimit = right,
-          rightLimit = Math.min(right + size, n),
-          i = left;
-      while (left < leftLimit && right < rightLimit) {
-        if (sorted[left] <= sorted[right]) {
-          buffer[i++] = sorted[left++];
-        } else {
-          buffer[i++] = sorted[right++];
-        }
-      }
-      while (left < leftLimit) {
-        buffer[i++] = sorted[left++];
-      }
-      while (right < rightLimit) {
-        buffer[i++] = sorted[right++];
-      }
+//  async function mergeSort(arr) {
+//   var sorted = arr.slice(),
+//       n = sorted.length,
+//       buffer = new Array(n);
+//   for (var size = 1; size < n; size *= 2) {
+//     for (var leftStart = 0; leftStart < n; leftStart += 2*size) {
+//       await sleep(10)
+//       var left = leftStart,
+//           right = Math.min(left + size, n),
+//           leftLimit = right,
+//           rightLimit = Math.min(right + size, n),
+//           i = left;
+//       while (left < leftLimit && right < rightLimit) {
+//         await sleep(0)
+//         mainList = sorted.slice()
+//         if (sorted[left] <= sorted[right]) {
+//           buffer[i++] = sorted[left++];
+//         } else {
+//           buffer[i++] = sorted[right++];
+//         }
+//       }
+//       while (left < leftLimit) {
+//         buffer[i++] = sorted[left++];
+//       }
+//       while (right < rightLimit) {
+//         buffer[i++] = sorted[right++];
+//       }
+//     }
+          
+//     var temp = sorted,
+//         sorted = buffer,
+//         buffer = temp;
+//   }
+//   mainList = sorted.slice()
+//   return sorted;
+// }
+
+
+function push(arr, pushStart, pushEnd) {
+  for(let l = pushStart; l < pushEnd; l++ ){
+    if(arr[l] > arr[l+1]){
+      swap(arr, l, l+1)
     }
-    var temp = sorted,
-        sorted = buffer,
-        buffer = temp;
   }
+}
 
-  return sorted;
+
+async function merge(arr, min, max, mid) {
+  i = min
+  while(i <= mid) {
+    states[i] = 1 
+    states[mid + i] = 0
+    playTone(arr[i])
+    if(arr[i] > arr[mid + 1]){
+      swap(arr, i, mid + 1)
+      push(arr, mid+1, max)
+      await sleep(60)
+    }
+    states[i] = -1
+    states[mid + i] = -1
+    i++
+  }
+}
+
+async function mergeSort(arr, min, max) {
+  if(max - min === 0) { // only one element
+    // pass
+  } else if(min - max === 1) { //only two elements
+    if(arr[min] > arr[max]){
+      swap(arr, min, max)
+    }
+  }else {
+    let mid = Math.floor((min + max) / 2)
+    await mergeSort(arr, min, mid)
+    await mergeSort(arr ,mid + 1, max)
+    await merge(arr, min, max, mid)
+  }
 }
 
 // Other Functions

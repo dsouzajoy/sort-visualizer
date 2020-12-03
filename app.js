@@ -28,7 +28,7 @@ const sortingAlgos = {
   BUBBLE_SORT: bubbleSort,
   SELECTION_SORT: selectionSort,
   QUICK_SORT: quickSort,
-  // MERGE_SORT: mergeSort,
+  MERGE_SORT: mergeSort,
 }
 
 let chosenAlgo = document.getElementById('sorting-dropdown').value || 'BUBBLE_SORT'
@@ -80,7 +80,6 @@ function startProcess() {
 }
 
 function runAnimation() {
-  console.log('-')
   document.getElementById('iteration-indicator').innerHTML = iterations
   let rectOffset = CANVAS_PADDING
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -114,10 +113,10 @@ function getColor(index) {
       return index === j ? '#F06449' : index === minIndex ? '#39FF14' : '#5BC3EB'
     }
 
-    case QUICK_SORT: {
+    case QUICK_SORT:
+    case MERGE_SORT: {
       return states[index] === 0 ? '#F06449' : states[index] === 1 ? '#39FF14' : '#5BC3EB'
     }
-
     default: {
       return '#5BC3EB'
     }
