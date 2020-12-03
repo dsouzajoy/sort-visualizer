@@ -140,7 +140,6 @@ async function merge(arr, min, max, mid) {
   i = min
   while(i <= mid) {
     states[i] = 1 
-    states[mid + i] = 0
     playTone(arr[i])
     if(arr[i] > arr[mid + 1]){
       swap(arr, i, mid + 1)
@@ -148,7 +147,6 @@ async function merge(arr, min, max, mid) {
       await sleep(60)
     }
     states[i] = -1
-    states[mid + i] = -1
     i++
   }
 }
